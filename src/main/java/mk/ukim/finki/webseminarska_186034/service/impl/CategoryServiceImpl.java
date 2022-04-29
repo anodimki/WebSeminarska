@@ -53,4 +53,9 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> searchCategories(String searchText) {
         return categoryRepository.findAllByNameLike(searchText);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        this.categoryRepository.deleteById(id);
+    }
 }

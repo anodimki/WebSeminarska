@@ -34,6 +34,16 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
+    public Manufacturer create(String name, String address) {
+        if (name==null || name.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        Manufacturer m = new Manufacturer(name,address);
+        manufacturerRepository.save(m);
+        return m;
+    }
+
+    @Override
     public void deleteById(Long id) {
         this.manufacturerRepository.deleteById(id);
     }

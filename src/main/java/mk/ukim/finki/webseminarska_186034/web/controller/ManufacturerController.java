@@ -15,11 +15,28 @@ import java.util.List;
 public class ManufacturerController {
     private final ManufacturerService manufacturerService;
 
-
-
-
     public ManufacturerController(ManufacturerService manufacturerService) {
         this.manufacturerService = manufacturerService;
+    }
+
+    @PostMapping("/add")
+    public String saveManufacturer(
+            @RequestParam(required = false) Long id,
+            @RequestParam String name,
+            @RequestParam String address) {
+
+        this.manufacturerService.create(name, address);
+        return "redirect:/manufacturers";
+    }
+
+
+    @GetMapping("/add-form")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String addManufacturerPage(Model model) {
+        List<Manufacturer> manufacturers = this.manufacturerService.findAll();
+        model.addAttribute("manufacturers", manufacturers);
+        model.addAttribute("bodyContent", "add-manufacturer");
+        return "master-template";
     }
 
     @GetMapping
@@ -33,22 +50,9 @@ public class ManufacturerController {
         model.addAttribute("bodyContent", "manufacturers");
         return "master-template";
     }
-    @GetMapping("/add-form")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String addManufacturerPage(Model model) {
-        List<Manufacturer> manufacturers = this.manufacturerService.findAll();
-        model.addAttribute("manufacturers", manufacturers);
-        model.addAttribute("bodyContent", "add-manufacturer");
-        return "master-template";
-    }
-    @PostMapping("/add")
-    public String saveManufacturer(
-            @RequestParam(required = false) Long id,
-            @RequestParam String name,
-            @RequestParam String address) {
-
-        this.manufacturerService.save(name, address);
-
+    @DeleteMapping("/delete/{id}")
+    public String deleteManufacturer(@PathVariable Long id) {
+        this.manufacturerService.deleteById(id);
         return "redirect:/manufacturers";
     }
 }

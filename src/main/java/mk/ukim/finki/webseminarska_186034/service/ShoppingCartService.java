@@ -10,5 +10,6 @@ public interface ShoppingCartService {
     List<Product> listAllProductsInShoppingCart(Long cartId);
     ShoppingCart getActiveShoppingCart(String username);
     ShoppingCart addProductToShoppingCart(String username, Long productId);
+    void deleteProductFromShoppingCart(String username, Long id);
 }
 

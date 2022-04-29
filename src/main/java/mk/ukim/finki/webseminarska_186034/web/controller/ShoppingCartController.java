@@ -46,5 +46,13 @@ public class ShoppingCartController {
             return "redirect:/shopping-cart?error=" + exception.getMessage();
         }
     }
+    @DeleteMapping("/delete/{id}")
+    public String deleteBookFromShoppingCart(@PathVariable Long id,
+                                             Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        this.shoppingCartService.deleteProductFromShoppingCart(user.getUsername(),id);
+        return "redirect:/shopping-cart";
+    }
+
 }
 

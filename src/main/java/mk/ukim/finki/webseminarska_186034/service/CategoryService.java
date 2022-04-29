@@ -16,5 +16,7 @@ public interface CategoryService {
 
     List<Category> searchCategories(String searchText);
 
+    void deleteById(Long id);
+
 }
 

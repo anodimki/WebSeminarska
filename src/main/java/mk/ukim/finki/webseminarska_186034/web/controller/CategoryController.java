@@ -21,7 +21,6 @@ public class CategoryController {
         this.categoryService = categoryService;
 
     }
-    // dodavanje na kategorija
     @PostMapping("/add")
     public String saveCategory(
             @RequestParam(required = false) Long id,
@@ -41,7 +40,6 @@ public class CategoryController {
         return "master-template";
     }
 
-    // listanje na kategorii
     @GetMapping
     public String getCategoryPage(@RequestParam(required = false) String error, Model model) {
         if (error != null && !error.isEmpty()) {
@@ -54,4 +52,9 @@ public class CategoryController {
         return "master-template";
     }
 
+    @DeleteMapping("/delete/{id}")
+    public String deleteCategory(@PathVariable Long id) {
+        this.categoryService.deleteById(id);
+        return "redirect:/categories";
+    }
 }

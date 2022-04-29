@@ -21,6 +21,17 @@
                         <tr th:each="manufacturer : ${manufacturers}" class="category">
                             <td th:text="${manufacturer.getName()}"></td>
                             <td th:text="${manufacturer.getAddress()}"></td>
+                            <td class="text-right">
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <form th:action="@{'/manufacturers/delete/{id}' (id=${manufacturer.getId()})}"
+                                      th:method="DELETE">
+                                    <button type="submit"
+                                            class="btn btn-sm btn-danger delete-manufacturer">
+                                        <i class="fa fa-trash">Delete</i>
+                                    </button>
+                                </form>
+                            </th:block>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

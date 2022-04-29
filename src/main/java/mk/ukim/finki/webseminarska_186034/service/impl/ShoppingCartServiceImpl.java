@@ -58,5 +58,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return this.shoppingCartRepository.save(shoppingCart);
     }
 
+    @Override
+    public void deleteProductFromShoppingCart(String username, Long id) {
+        ShoppingCart shoppingCart = this.getActiveShoppingCart(username);
+        shoppingCart.getProducts().removeIf(
+                r-> r.getId().equals(id));
+        this.shoppingCartRepository.save(shoppingCart);
+    }
+
+
 }
 

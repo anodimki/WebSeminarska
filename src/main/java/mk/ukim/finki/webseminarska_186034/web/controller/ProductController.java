@@ -18,9 +18,7 @@ public class ProductController {
     private final CategoryService categoryService;
     private final ManufacturerService manufacturerService;
 
-    public ProductController(ProductService productService,
-                             CategoryService categoryService,
-                             ManufacturerService manufacturerService) {
+    public ProductController(ProductService productService, CategoryService categoryService, ManufacturerService manufacturerService) {
         this.productService = productService;
         this.categoryService = categoryService;
         this.manufacturerService = manufacturerService;
@@ -28,11 +26,11 @@ public class ProductController {
 
     @GetMapping
     public String getProductPage(@RequestParam(required = false) String error, Model model) {
-        if (error != null && !error.isEmpty()) {
+        if(error!=null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
-        List<Product> products = this.productService.findAll();
+        List<Product> products=this.productService.findAll();
         model.addAttribute("products", products);
         model.addAttribute("bodyContent", "products");
         return "master-template";
@@ -46,24 +44,24 @@ public class ProductController {
 
     @GetMapping("/edit-form/{id}")
     public String editProductPage(@PathVariable Long id, Model model) {
-        if (this.productService.findById(id).isPresent()) {
-            Product product = this.productService.findById(id).get();
-            List<Manufacturer> manufacturers = this.manufacturerService.findAll();
-            List<Category> categories = this.categoryService.listCategories();
+        if(this.productService.findById(id).isPresent()) {
+            Product product=this.productService.findById(id).get();
+            List<Manufacturer> manufacturers=this.manufacturerService.findAll();
+            List<Category> categories=this.categoryService.listCategories();
             model.addAttribute("manufacturers", manufacturers);
             model.addAttribute("categories", categories);
             model.addAttribute("product", product);
             model.addAttribute("bodyContent", "add-product");
             return "master-template";
         }
-        return "redirect:/products?error=ProductNotFound";
+        return "redirect:/products?=ProductNotFound";
     }
 
     @GetMapping("/add-form")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addProductPage(Model model) {
-        List<Manufacturer> manufacturers = this.manufacturerService.findAll();
-        List<Category> categories = this.categoryService.listCategories();
+        List<Manufacturer> manufacturers=this.manufacturerService.findAll();
+        List<Category> categories=this.categoryService.listCategories();
         model.addAttribute("manufacturers", manufacturers);
         model.addAttribute("categories", categories);
         model.addAttribute("bodyContent", "add-product");
@@ -77,8 +75,9 @@ public class ProductController {
             @RequestParam Double price,
             @RequestParam Integer quantity,
             @RequestParam Long category,
-            @RequestParam Long manufacturer) {
-        if (id != null) {
+            @RequestParam Long manufacturer
+    ) {
+        if(id!=null) {
             this.productService.edit(id, name, price, quantity, category, manufacturer);
         } else {
             this.productService.save(name, price, quantity, category, manufacturer);
@@ -86,4 +85,3 @@ public class ProductController {
         return "redirect:/products";
     }
 }
-

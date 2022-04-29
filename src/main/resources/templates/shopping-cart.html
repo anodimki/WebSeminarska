@@ -32,6 +32,14 @@
                             <td th:text="${product.getQuantity()}"></td>
                             <td th:text="${product.getManufacturer() != null} ? ${product.getManufacturer().getName()} : 'No Manufacturer'"></td>
                             <td th:text="${product.getCategory() != null} ? ${product.getCategory().getName()} : 'No Category'"></td>
+                            <td>
+                                <form th:action="@{'/shopping-cart/delete/{id}' (id=${product.getId()})}" th:method="DELETE">
+                                    <button type="submit"
+                                            class="btn btn-sm btn-danger delete-category">
+                                        <i class="fa fa-trash">Delete</i>
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
