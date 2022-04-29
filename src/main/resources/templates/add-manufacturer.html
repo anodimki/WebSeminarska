@@ -1,0 +1,42 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Sneakers Shop</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="/manufacturers/add" method="POST">
+                    <input id="id" type="hidden" name="id" th:value="(${manufacturer} != null ? ${manufacturer.getId()} : '')">
+                    <div class="form-group">
+                        <label for="name">Manufacturer's name</label>
+                        <input type="text"
+                               class="form-control"
+                               id="name"
+                               name="name"
+                               th:value="(${manufacturer} != null ? ${manufacturer.getName()} : '')"
+                               required
+                               placeholder="Enter manufacturer's name">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Manufacturer's address</label>
+                        <input type="text"
+                               class="form-control"
+                               id="description"
+                               name="description"
+                               th:value="(${manufacturer} != null ? ${category.getAddress()} : '')"
+                               required
+                               placeholder="Enter manufacturer's address">
+                    </div>
+
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    <a type="button" class="btn btn-primary" href="/manufacturers">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
